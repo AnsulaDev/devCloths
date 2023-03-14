@@ -76,7 +76,7 @@ export const createUserDocumentFromAuth = async (userAuth,
 
     const userDocRef = doc(db, 'users', userAuth.uid);
 
-    console.log(userDocRef);
+
 
 
     //to get user data 
@@ -102,7 +102,7 @@ export const createUserDocumentFromAuth = async (userAuth,
         }
     }
     // but if the user  data  is exist then it will ignore above  conditions
-    return userDocRef;
+    return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -122,3 +122,18 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 export const  onAuthStateChangedListener = (callback) =>  onAuthStateChanged(auth, callback);
+
+
+export const getCurrentUser = () => {
+    return new Promise((resovle, reject) => {
+        const unsubdcribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubdcribe();
+                resovle(userAuth);
+            },
+            reject
+
+        );
+    });
+}
