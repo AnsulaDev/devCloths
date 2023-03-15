@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
 import { ReactComponent as Dev } from '../../assets/dev.svg';
-import { signOutUser } from "../../utils/firebase/firebase.utils";
-import { useSelector } from "react-redux";
+import { signOutStart } from "../../store/user/user.action";
+import { useSelector , useDispatch} from "react-redux";
 import {selectorCurrentUser} from '../../store/user/user.selector';
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import {
@@ -17,7 +17,8 @@ const Navigation = () => {
 
     const currentUser = useSelector(selectorCurrentUser);  /* to access user reducer use state.user  */
     const isCartOpen = useSelector(selectIsCartOpen);
-    
+    const dispatch = useDispatch();
+    const signOutUser = () => dispatch(signOutStart());
     return (
         <Fragment>
             <NavigationContainer>
